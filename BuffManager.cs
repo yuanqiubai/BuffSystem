@@ -1,7 +1,5 @@
 using UnityEngine;
 
-using System;
-using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -10,7 +8,6 @@ using ActorStatsSystem;
 
 namespace BuffSystem
 {
-
     /// <summary>
     /// Buff管理器
     /// </summary>
@@ -34,8 +31,6 @@ namespace BuffSystem
         bool isProcessedInFrames = false;                    // 是否在帧中处理
         int NumberOfFramesProcessed = 20;                    // 每帧处理的Buff数量
 
-        public LoadingBuff loadingBuff;                      // Buff加载器
-
         Queue<Util.Pair<ActorStats, Buff>> BuffBuffer = 
             new Queue<Util.Pair<ActorStats, Buff>>();        // buff队列缓冲区
 
@@ -51,14 +46,8 @@ namespace BuffSystem
                 return;
             }
 
-            Type type = typeof(LoadingBuff);                    // 获取loadingBuff的Loading方法（包括私有方法）
-            MethodInfo method = type.GetMethod(                 // 通过反射调用loadingBuff的Loading方法
-                "Loading", BindingFlags.NonPublic | BindingFlags.Instance);  
-            method.Invoke(loadingBuff, new object[] { StaticBuffList.Instance }); // 加载Buff
-
-            //loadingBuff.Loading(StaticBuffList.Instance);     // 加载Buff
-            StartCoroutine(ISubscribeBuff());                   // 启动Buff订阅协程
-            DontDestroyOnLoad(this);                            // 防止场景切换时销毁  
+            StartCoroutine(ISubscribeBuff());                 // 启动Buff订阅协程
+            DontDestroyOnLoad(this);                          // 防止场景切换时销毁  
         }
 
 
