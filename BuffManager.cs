@@ -9,7 +9,8 @@ using ActorStatsSystem;
 namespace BuffSystem
 {
     /// <summary>
-    /// Buff¹ÜÀíÆ÷
+    /// Buffç®¡ç†å™¨
+    /// 1. Buffç®¡ç†å™¨é‡‡ç”¨äº†å•ä¾‹æ¨¡å¼ï¼Œç”¨æ¥å…¨å±€å¤„ç†æ¸¸æˆå¯¹è±¡ä¹‹é—´çš„Buffä¼ é€’
     /// </summary>
     public class BuffManager : MonoBehaviour
     {
@@ -28,11 +29,11 @@ namespace BuffSystem
             }
         }
 
-        bool isProcessedInFrames = false;                    // ÊÇ·ñÔÚÖ¡ÖĞ´¦Àí
-        int NumberOfFramesProcessed = 20;                    // Ã¿Ö¡´¦ÀíµÄBuffÊıÁ¿
+        bool isProcessedInFrames = false;                    // æ˜¯å¦åœ¨å¸§ä¸­å¤„ç†
+        int NumberOfFramesProcessed = 20;                    // æ¯å¸§å¤„ç†çš„Buffæ•°é‡
 
         Queue<Util.Pair<ActorStats, Buff>> BuffBuffer = 
-            new Queue<Util.Pair<ActorStats, Buff>>();        // buff¶ÓÁĞ»º³åÇø
+            new Queue<Util.Pair<ActorStats, Buff>>();        // buffé˜Ÿåˆ—ç¼“å†²åŒº
 
         void Awake()
         {
@@ -46,17 +47,17 @@ namespace BuffSystem
                 return;
             }
 
-            StartCoroutine(ISubscribeBuff());                 // Æô¶¯Buff¶©ÔÄĞ­³Ì
-            DontDestroyOnLoad(this);                          // ·ÀÖ¹³¡¾°ÇĞ»»Ê±Ïú»Ù  
+            StartCoroutine(ISubscribeBuff());                 // å¯åŠ¨Buffè®¢é˜…åç¨‹
+            DontDestroyOnLoad(this);                          // é˜²æ­¢åœºæ™¯åˆ‡æ¢æ—¶é”€æ¯  
         }
 
 
         /// <summary>
-        /// ·¢²¼Buff
-        /// Ö°Ôğ£º½«½«·¢²¼ÕßµÄBuff´«ËÍµ½BuffBuffer¶ÓÁĞÖĞ
+        /// å‘å¸ƒBuff
+        /// èŒè´£ï¼šå°†å°†å‘å¸ƒè€…çš„Buffä¼ é€åˆ°BuffBufferé˜Ÿåˆ—ä¸­
         /// </summary>
         /// <param name="ActorState"></param>
-        /// <param name="buffID", BuffµÄID></param>
+        /// <param name="buffID", Buffçš„ID></param>
 
         public void PublishBuffBuffer(ActorStats ActorState, string buffID)
         {
@@ -66,7 +67,7 @@ namespace BuffSystem
         }
 
         /// <summary>
-        /// ·¢²¼Buff
+        /// å‘å¸ƒBuff
         /// </summary>
         /// <param name="objectState"></param>
         /// <param name="buff"></param>
@@ -75,40 +76,40 @@ namespace BuffSystem
             BuffBuffer.Enqueue(new Util.Pair<ActorStats, Buff>(actorState, buff));
         }
 
-        // ÒÀ´Î·¢Åä¸øBuff¶©ÔÄÕß£¨Ğ­³ÌÈ«¾Ö´¦Àí£©
+        // ä¾æ¬¡å‘é…ç»™Buffè®¢é˜…è€…ï¼ˆåç¨‹å…¨å±€å¤„ç†ï¼‰
         IEnumerator ISubscribeBuff()
         {
-            while (true) // ÎŞÏŞÑ­»·±£Ö¤Ğ­³Ì³ÖĞøÔËĞĞ
+            while (true) // æ— é™å¾ªç¯ä¿è¯åç¨‹æŒç»­è¿è¡Œ
             {
                 if (BuffBuffer.Count == 0)
                 {
-                    yield return null; // ¶ÓÁĞÎª¿ÕÊ±µÈ´ıÏÂÒ»Ö¡
+                    yield return null; // é˜Ÿåˆ—ä¸ºç©ºæ—¶ç­‰å¾…ä¸‹ä¸€å¸§
                     continue;
                 }
 
                 int processedCount = 0;
                 while (BuffBuffer.Count > 0)
                 {
-                    // ·ÖÖ¡´¦Àí¼ì²é
+                    // åˆ†å¸§å¤„ç†æ£€æŸ¥
                     if (isProcessedInFrames && processedCount >= NumberOfFramesProcessed)
                     {
-                        yield return null; // µÈ´ıÏÂÒ»Ö¡¼ÌĞø´¦Àí
+                        yield return null; // ç­‰å¾…ä¸‹ä¸€å¸§ç»§ç»­å¤„ç†
                         processedCount = 0;
                         continue;
                     }
 
                     Util.Pair<ActorStats, Buff> pair = BuffBuffer.Dequeue();
-                    pair.First.AddBuff(pair.Second);               // Ìí¼ÓBuffµ½¶ÔÏóBuffÁĞ±í
+                    pair.First.AddBuff(pair.Second);               // æ·»åŠ Buffåˆ°å¯¹è±¡Buffåˆ—è¡¨
 
                     processedCount++;
                 }
 
-                yield return null; // È·±£Ã¿Ö¡ÖÁÉÙÓĞÒ»´Î yield
+                yield return null; // ç¡®ä¿æ¯å¸§è‡³å°‘æœ‰ä¸€æ¬¡ yield
             }
         }
 
 
-        // ÉèÖÃ·ÖÖ¡´¦Àí
+        // è®¾ç½®åˆ†å¸§å¤„ç†
         public void SetProcessedBuffInFrame(bool isProcessedInFrames, int NumberOfFramesProcessed = 20)
         {
             this.isProcessedInFrames = isProcessedInFrames;
