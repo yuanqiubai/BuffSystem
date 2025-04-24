@@ -31,8 +31,6 @@ namespace ActorStatsSystem
 		public bool IsInvulnerable = false;             // 是否无敌
 
 		public AttributeMultipliers stateCoefficient;   // 状态系数
-		public ActorsContainer SceneObjectList;         // 场景对象表
-		public ActorStatsList SceneObjectStateList;     // 场景对象属性表
 
 		BuffSystem.BuffContainer BuffList =
 			new BuffSystem.BuffContainer();         // Buff容器
@@ -46,8 +44,8 @@ namespace ActorStatsSystem
 			{
 				UniqueID += Random.Range(0, 10).ToString();
 			}
-			SceneObjectList.AddActor(UniqueID, gameObject);        // 注册对象到场景对象表
-		}
+            ActorsContainer.Instance.AddActor(UniqueID, gameObject);        // 注册对象到场景对象表
+        }
 
 		void Update()
 		{

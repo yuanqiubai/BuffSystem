@@ -78,4 +78,36 @@ public class AttackBuff : Buff, IBuffEffect
    - 你可以继承IBuffEffect接口，来实现自己的buff效果
    - 你也可以不继承IBuffEffect接口，直接在Buff类中实现自己的buff效果，但是你的委托类型必须是BuffEffectDelegate，并且在构造函数中注册它们
 
+# 使用流程图
+
+场景需求:
+```requirement
+    
+    场景列表:
+        BuffManager----------------> Add BuffManager Component
+        ActorsContainer------------> Add ActorsContainer Component
+        Player---------------------> Add ActorStats Component
+        Enemy----------------------> Add ActorStats Component
+
+```
+
+脚本调用方式:
+```csharp
+    
+    // 创建一个处理玩家攻击的脚本
+    public class PlayerAttackBox : MonoBehaviour
+    {
+        void OnTriggerEnter(Collider2D other)
+        {
+            if (other.CompareTag("Enemy"))      // 你需要修改Enemy的tag为"Enemy"
+            {
+                // 玩家攻击敌人
+                AttackBuff attackBuff = new AttackBuff();
+                BuffManager.Instance.PublishBuffBuffer(other.gameObject.GetComponent<ActorStats>(), attackBuff);
+            }
+        }
+    }
+
+```
+
 

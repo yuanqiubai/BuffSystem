@@ -112,25 +112,5 @@ namespace BuffSystem
         {
             return buffDict[buffID];
         }
-
-
-        #region TestDebug
-        public void Test_PrintBuff()
-        {
-            if(buffDict.Count == 0)
-            {
-                Debug.Log(actorStats.name + "的Buff表为空!");
-                return;
-            }
-
-            foreach (var item in buffDict)
-            {
-                Debug.Log("BuffID: " + item.Value.buffData.buffID + 
-                    " BuffName: " + item.Value.buffData.buffName + 
-                    "持续时间: " + item.Value.buffData.timeLife + 
-                    "已持续时间: " + (Time.time - item.Value.buffData.currentTime));
-            }
-        }
-        #endregion
     }
 }
