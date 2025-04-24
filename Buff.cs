@@ -4,44 +4,49 @@ using ActorStatsSystem;
 
 namespace BuffSystem
 {
-
+    /*
+    è¿™æ˜¯å®ç°buffæ•ˆæœçš„æ¥å£ï¼Œæ´¾ç”Ÿçš„buffç±»éœ€è¦ç»§æ‰¿å®ƒ
+    */
     public interface IBuffEffect
     {
         /// <summary>
-        /// BuffĞ§¹û¼¤»îÊ±µÄĞ§¹û
-        /// Ê¹ÓÃ¹æÔò£ºÅÉÉúBuffÀàÊ±£¬ÊµÏÖBuff¼¤»îÊ±¿ÌµÄĞ§¹û
+        /// Buffæ•ˆæœæ¿€æ´»æ—¶çš„æ•ˆæœ
+        /// ä½¿ç”¨è§„åˆ™ï¼šæ´¾ç”ŸBuffç±»æ—¶ï¼Œå®ç°Buffæ¿€æ´»æ—¶åˆ»çš„æ•ˆæœ
         /// </summary>
         void BuffEffectOnActivate(ActorStats target);
 
         /// <summary>
-        /// Buff³ÖĞøÆÚ¼äµÄĞ§¹û
-        /// Ê¹ÓÃ¹æÔò£ºÅÉÉúBuffÀàÊ±£¬ÊµÏÖBuff³ÖĞøÆÚ¼äµÄĞ§¹û
+        /// BuffæŒç»­æœŸé—´çš„æ•ˆæœ
+        /// ä½¿ç”¨è§„åˆ™ï¼šæ´¾ç”ŸBuffç±»æ—¶ï¼Œå®ç°BuffæŒç»­æœŸé—´çš„æ•ˆæœ
         /// </summary>
         void BuffEffectOnSustained(ActorStats target);
 
         /// <summary>
-        /// Buff½áÊøÊ±¿ÌµÄĞ§¹û
-        /// Ê¹ÓÃ¹æÔò£ºÅÉÉúBuffÀàÊ±£¬ÊµÏÖBuff½áÊøÊ±¿ÌµÄĞ§¹û
+        /// Buffç»“æŸæ—¶åˆ»çš„æ•ˆæœ
+        /// ä½¿ç”¨è§„åˆ™ï¼šæ´¾ç”ŸBuffç±»æ—¶ï¼Œå®ç°Buffç»“æŸæ—¶åˆ»çš„æ•ˆæœ
         /// </summary>
         void BuffEffectOnDeactivate(ActorStats target);
     }
 
+    /*
+    BuffDataæ˜¯buffçš„åŸºæœ¬æ•°æ®ã€‚
+    */
     public class BuffData
     {
         public Sprite buffIcon;
-        public string IconPath;                 // BuffÍ¼±êÂ·¾¶
+        public string IconPath;                 // Buffå›¾æ ‡è·¯å¾„
 
         public string buffID;                   // BuffID
-        public string buffName;                 // BuffÃû³Æ
+        public string buffName;                 // Buffåç§°
 
-        public float timeLife = 5;              // Buff³ÖĞøÊ±¼ä (-1ÎªÎŞÏŞÊ±¼ä)
-        public float currentTime = 0;           // Buffµ±Ç°Ê±¼ä
+        public float timeLife = 5;              // BuffæŒç»­æ—¶é—´ (-1ä¸ºæ— é™æ—¶é—´)
+        public float currentTime = 0;           // Buffå½“å‰æ—¶é—´
 
-        // ĞÂÔö¼ä¸ô´¥·¢Ïà¹Ø²ÎÊı
-        public float intervalTime = 1f;         // Ğ§¹û´¥·¢¼ä¸ô£¨Ãë£©
-        public float lastTriggerTime;           // ÉÏ´Î´¥·¢Ê±¼ä
+        // æ–°å¢é—´éš”è§¦å‘ç›¸å…³å‚æ•°
+        public float intervalTime = 1f;         // æ•ˆæœè§¦å‘é—´éš”ï¼ˆç§’ï¼‰
+        public float lastTriggerTime;           // ä¸Šæ¬¡è§¦å‘æ—¶é—´
 
-        public bool isActive = false;           // BuffÊÇ·ñ¼¤»î(Ä¬ÈÏ²»¼¤»î)
+        public bool isActive = false;           // Buffæ˜¯å¦æ¿€æ´»(é»˜è®¤ä¸æ¿€æ´»)
 
         public BuffData() { }
 
@@ -56,20 +61,20 @@ namespace BuffSystem
     }
 
     /// <summary>
-    /// Buff»ùÀà
+    /// BuffåŸºç±»
     /// </summary>
     [Serializable]
     public class Buff
     {
         public BuffData buffData = new BuffData();
 
-        // BuffĞ§¹û»Øµ÷º¯Êı
-        protected delegate void BuffEffectDelegate(ActorStats target);    // BuffĞ§¹ûÎ¯ÍĞ
-        protected BuffEffectDelegate OnActivate;                           // Buff¼¤»îÊ±¿ÌÎ¯ÍĞ
-        protected BuffEffectDelegate OnUpdate;                             // BUff³ÖĞøÆÚ¼äÎ¯ÍĞ
-        protected BuffEffectDelegate OnDeactivate;                         // Buff½áÊøÊ±¿ÌÎ¯ÍĞ
+        // Buffæ•ˆæœå›è°ƒå‡½æ•°
+        protected delegate void BuffEffectDelegate(ActorStats target);    // Buffæ•ˆæœå§”æ‰˜
+        protected BuffEffectDelegate OnActivate;                           // Buffæ¿€æ´»æ—¶åˆ»å§”æ‰˜
+        protected BuffEffectDelegate OnUpdate;                             // BUffæŒç»­æœŸé—´å§”æ‰˜
+        protected BuffEffectDelegate OnDeactivate;                         // Buffç»“æŸæ—¶åˆ»å§”æ‰˜
 
-        //  Ä¬ÈÏ¹¹Ôì
+        //  é»˜è®¤æ„é€ 
         public Buff() { }
 
         public Buff(Buff otherBuff)
@@ -113,42 +118,42 @@ namespace BuffSystem
             }
         }
 
-        // ÖØÖÃBuff³ÖĞøÊ±¼ä
+        // é‡ç½®BuffæŒç»­æ—¶é—´
         public void RemakingTime()
         {
             buffData.currentTime = Time.time;
         }
 
-        // ´¦ÀíBuff³ÖĞøÊ±¼ä¹Ø±ÕBuff
+        // å¤„ç†BuffæŒç»­æ—¶é—´å…³é—­Buff
         public void UpdateTime()
         {   
-            if (buffData.timeLife <= 0) return;                  // ÓÀ¾ÃBuff
+            if (buffData.timeLife <= 0) return;                  // æ°¸ä¹…Buff
 
-            if(Time.time - buffData.currentTime >= buffData.timeLife)     // ¼ì²âÊ±¼äÊÇ·ñµ½ÆÚ
+            if(Time.time - buffData.currentTime >= buffData.timeLife)     // æ£€æµ‹æ—¶é—´æ˜¯å¦åˆ°æœŸ
             {
-                // ¹Ø±ÕBuff
+                // å…³é—­Buff
                 buffData.isActive = false;
             }
         }
 
-        // Buff¼¤»îÊ±µÄĞ§¹û
+        // Buffæ¿€æ´»æ—¶çš„æ•ˆæœ
         public void ActivateBuffEffect(ActorStats Target)
         {
-            if (!buffData.isActive)                      // ±ÜÃâÖØ¸´¼¤»î£¬Ôì³ÉBuffĞ§¹ûµş¼Ó»òÕß¸²¸Ç
+            if (!buffData.isActive)                      // é¿å…é‡å¤æ¿€æ´»ï¼Œé€ æˆBuffæ•ˆæœå åŠ æˆ–è€…è¦†ç›–
             {
                 buffData.isActive = true;
 
                 RemakingTime();
                 buffData.lastTriggerTime = buffData.currentTime;
 
-                OnActivate?.Invoke(Target);     // BuffĞ§¹ûÓ¦ÓÃ
+                OnActivate?.Invoke(Target);     // Buffæ•ˆæœåº”ç”¨
             }
         }
 
-        // Buff³ÖĞøÊ±µÄĞ§¹û
+        // BuffæŒç»­æ—¶çš„æ•ˆæœ
         public void HandleSustainedEffect(ActorStats Target)
         {
-            // ¼ä¸ô´¥·¢¼ì²â
+            // é—´éš”è§¦å‘æ£€æµ‹
             if(buffData.intervalTime > 0 && Time.time - buffData.lastTriggerTime >= buffData.intervalTime)
             {
                 OnUpdate?.Invoke(Target);
@@ -156,12 +161,12 @@ namespace BuffSystem
             }
         }
 
-        // Buff¹Ø±ÕÊ±µÄĞ§¹û
+        // Buffå…³é—­æ—¶çš„æ•ˆæœ
         public void DeactivateBuffEffect(ActorStats Target)
         {
             if (!buffData.isActive)
             {
-                OnDeactivate?.Invoke(Target);                               // BuffĞ§¹ûÒÆ³ı
+                OnDeactivate?.Invoke(Target);                               // Buffæ•ˆæœç§»é™¤
             }
         }
     }
