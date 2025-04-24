@@ -10,7 +10,9 @@ namespace BuffSystem
 {
     /// <summary>
     /// Buff管理器
-    /// 1. Buff管理器采用了单例模式，用来全局处理游戏对象之间的Buff传递
+    /// 1. Buff管理器采用了单例模式，用来全局处理游戏对象之间的Buff传递.
+    /// 2. 发布者需要调用 PublishBuffBuffer 方法，发布上来的Buff会放置在消息队列中，最后由 ISubscribeBuff 方法进行发布.
+    /// 3. ISubscribeBuff 会根据队列中的 Buff 和 Buff 的接收者，发布到接受者的的"信箱"中(即: BuffContainer)
     /// </summary>
     public class BuffManager : MonoBehaviour
     {
