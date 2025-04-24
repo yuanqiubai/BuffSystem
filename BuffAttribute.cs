@@ -4,7 +4,7 @@ using System;
 namespace BuffSystem
 {
     /// <summary>
-    /// ÓÃÀ´±ê¼ÇBuffÀà
+    /// Buffç‰¹æ€§
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
     public class BuffAttribute : Attribute
