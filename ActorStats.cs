@@ -1,48 +1,52 @@
 using UnityEngine;
 
-// ¶ÔÏóÊôĞÔ
+// å¯¹è±¡å±æ€§
 namespace ActorStatsSystem
 {
 	/// <summary>
-	/// ¶ÔÏóÊôĞÔ»ùÀà
+	/// å¯¹è±¡å±æ€§åŸºç±»
+	/// 1. éœ€è¦åˆ›å»ºä¸€ä¸ªæ¸¸æˆå¯¹è±¡ï¼Œç„¶åæŠŠActorSstatsç»„ä»¶æ‹–ç»™å®ƒã€‚
+	/// 2. ä½ å¯èƒ½çœ‹åˆ°æˆ‘è¿™é‡Œæœ‰ä¸€ä¸ªUIDï¼Œä½†è¯·ä¸è¦åœ¨æ„å®ƒï¼Œå®ƒæ˜¯ä¸´æ—¶ç”Ÿæˆçš„ã€‚
+	/// 3. åœ¨å‘å¸ƒbuffæ—¶ï¼Œä½ éœ€è¦å°†å¯¹æ–¹çš„ActorIDå’Œå’Œéœ€è¦å‘å¸ƒçš„bufféƒ½å‘Šè¯‰ç»™BuffManagerã€‚
+	/// 4. å®ƒæ˜¯å¯æ‹“å±•åŸºç±»ï¼Œä½ å¯ä»¥é€‰æ‹©æ€§çš„ä¸ºå®ƒæ·»åŠ æ›´å¤šçš„å±æ€§è¯æ¡ï¼Œæˆ–è€…åˆ é™¤ä¸éœ€è¦çš„å±æ€§è¯æ¡ã€‚
 	/// Author: Firstname Lastname
 	/// </summary>
 	public class ActorStats : MonoBehaviour
 	{
-		public string UniqueID;                         // Î¨Ò»ID
-		public string ActorID;                          // ¶ÔÏóID
-		public string ActorName;                        // ¶ÔÏóÃû³Æ
+		public string UniqueID;                         // å”¯ä¸€ID
+		public string ActorID;                          // å¯¹è±¡ID
+		public string ActorName;                        // å¯¹è±¡åç§°
 
-		public float Hp = 100f;                         // µ±Ç°ÑªÁ¿
-		public float MaxHp = 100f;                      // ×î´óÑªÁ¿
-		public float OriginalMaxHp = 100f;              // ³õÊ¼×î´óÑªÁ¿
+		public float Hp = 100f;                         // å½“å‰è¡€é‡
+		public float MaxHp = 100f;                      // æœ€å¤§è¡€é‡
+		public float OriginalMaxHp = 100f;              // åˆå§‹æœ€å¤§è¡€é‡
 
-		public float attack = 10;                       // ÉËº¦
-		public float OriginalAttack = 10;               // ³õÊ¼ÉËº¦
-		public float defence = 10;                      // ·ÀÓù
+		public float attack = 10;                       // ä¼¤å®³
+		public float OriginalAttack = 10;               // åˆå§‹ä¼¤å®³
+		public float defence = 10;                      // é˜²å¾¡
 
-		public float moveSpeed = 10;                    // ÒÆ¶¯ËÙ¶È
+		public float moveSpeed = 10;                    // ç§»åŠ¨é€Ÿåº¦
 
-		public bool IsDead = false;                     // ÊÇ·ñËÀÍö
-		public bool IsInvulnerable = false;             // ÊÇ·ñÎŞµĞ
+		public bool IsDead = false;                     // æ˜¯å¦æ­»äº¡
+		public bool IsInvulnerable = false;             // æ˜¯å¦æ— æ•Œ
 
-		public AttributeMultipliers stateCoefficient;       // ×´Ì¬ÏµÊı
-		public ActorsContainer SceneObjectList;         // ³¡¾°¶ÔÏó±í
-		public ActorStatsList SceneObjectStateList;     // ³¡¾°¶ÔÏóÊôĞÔ±í
+		public AttributeMultipliers stateCoefficient;       // çŠ¶æ€ç³»æ•°
+		public ActorsContainer SceneObjectList;         // åœºæ™¯å¯¹è±¡è¡¨
+		public ActorStatsList SceneObjectStateList;     // åœºæ™¯å¯¹è±¡å±æ€§è¡¨
 
 		BuffSystem.BuffContainer BuffList =
-			new BuffSystem.BuffContainer();                  // BuffÁĞ±í
+			new BuffSystem.BuffContainer();                  // Buffåˆ—è¡¨
 
 		void Awake()
 		{
-			BuffList.InitBuffContainer(this);                // ³õÊ¼»¯Buff±í
+			BuffList.InitBuffContainer(this);                // åˆå§‹åŒ–Buffè¡¨
 
-			// Ëæ»úÉú³ÉÎ¨Ò»ID
+			// éšæœºç”Ÿæˆå”¯ä¸€ID
 			for (int i = 0; i < 8; i++)
 			{
 				UniqueID += Random.Range(0, 10).ToString();
 			}
-			SceneObjectList.AddActor(UniqueID, gameObject);        // ×¢²á¶ÔÏóµ½³¡¾°¶ÔÏó±í
+			SceneObjectList.AddActor(UniqueID, gameObject);        // æ³¨å†Œå¯¹è±¡åˆ°åœºæ™¯å¯¹è±¡è¡¨
 		}
 
 		void Update()
@@ -52,7 +56,7 @@ namespace ActorStatsSystem
 				return;
 			}
 
-			// ¸üĞÂBuffÊ±¼ä
+			// æ›´æ–°Buffæ—¶é—´
 			BuffList.UpdateBuffTimeLife();
 
 			if (Input.GetKeyDown(KeyCode.Space))
@@ -62,7 +66,7 @@ namespace ActorStatsSystem
 		}
 
 		/// <summary>
-		/// BuffÌí¼Ó½Ó¿Ú
+		/// Buffæ·»åŠ æ¥å£
 		/// </summary>
 		/// <param name="newBuff"></param>
 		public void AddBuff(BuffSystem.Buff newBuff)
