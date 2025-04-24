@@ -1,2 +1,3 @@
 # BuffSystem
 这是适用于Unity的Buff系统，我为它提供了更自由的Buff实现方式
+你可以完全自定义自己的buff
