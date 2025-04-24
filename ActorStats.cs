@@ -30,12 +30,12 @@ namespace ActorStatsSystem
 		public bool IsDead = false;                     // 是否死亡
 		public bool IsInvulnerable = false;             // 是否无敌
 
-		public AttributeMultipliers stateCoefficient;       // 状态系数
+		public AttributeMultipliers stateCoefficient;   // 状态系数
 		public ActorsContainer SceneObjectList;         // 场景对象表
 		public ActorStatsList SceneObjectStateList;     // 场景对象属性表
 
 		BuffSystem.BuffContainer BuffList =
-			new BuffSystem.BuffContainer();                  // Buff列表
+			new BuffSystem.BuffContainer();         // Buff容器
 
 		void Awake()
 		{
