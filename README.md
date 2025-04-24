@@ -91,7 +91,7 @@ public class AttackBuff : Buff, IBuffEffect
 
 ```
 
-脚本调用方式:
+buff发布方式:
 ```csharp
     
     // 创建一个处理玩家攻击的脚本
