@@ -54,20 +54,6 @@ namespace BuffSystem
 
         /// <summary>
         /// 发布Buff
-        /// 职责：将将发布者的Buff传送到BuffBuffer队列中
-        /// </summary>
-        /// <param name="ActorState"></param>
-        /// <param name="buffID", Buff的ID></param>
-
-        public void PublishBuffBuffer(ActorStats ActorState, string buffID)
-        {
-            Buff buff = new Buff(StaticBuffList.Instance.GetBuffByID(buffID));
-                
-            BuffBuffer.Enqueue(new Util.Pair<ActorStats, Buff>(ActorState, buff));
-        }
-
-        /// <summary>
-        /// 发布Buff
         /// </summary>
         /// <param name="objectState"></param>
         /// <param name="buff"></param>

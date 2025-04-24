@@ -12,7 +12,6 @@ public class AttackBuff : Buff, IBuffEffect
 {
     public AttackBuff() 
     {
-        this.buffData.buffID = "1";
         this.buffData.buffName = "攻击提升";
         this.buffData.timeLife = 5f;
         this.buffData.intervalTime = 1.0f;          // buff的触发间隔时间
@@ -71,7 +70,6 @@ public class AttackBuff : Buff, IBuffEffect
 ```
 自定义新的Buff有几个注意事项：
 1. Buff类的构造函数中需要设置buffData的属性:
-   - buffID: buff的唯一标识符
    - buffName: buff的名称
    - timeLife: buff的持续时间
    - intervalTime: buff的触发间隔时间

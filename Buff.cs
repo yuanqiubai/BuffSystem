@@ -36,7 +36,6 @@ namespace BuffSystem
         public Sprite buffIcon;
         public string IconPath;                 // Buff图标路径
 
-        public string buffID;                   // BuffID
         public string buffName;                 // Buff名称
 
         public float timeLife = 5;              // Buff持续时间 (-1为无限时间)
@@ -69,7 +68,7 @@ namespace BuffSystem
         public BuffData buffData = new BuffData();
 
         // Buff效果回调函数
-        protected delegate void BuffEffectDelegate(ActorStats target);    // Buff效果委托
+        protected delegate void BuffEffectDelegate(ActorStats target);     // Buff效果委托
         protected BuffEffectDelegate OnActivate;                           // Buff激活时刻委托
         protected BuffEffectDelegate OnUpdate;                             // BUff持续期间委托
         protected BuffEffectDelegate OnDeactivate;                         // Buff结束时刻委托
@@ -127,7 +126,7 @@ namespace BuffSystem
         // 处理Buff持续时间关闭Buff
         public void UpdateTime()
         {   
-            if (buffData.timeLife <= 0) return;                  // 永久Buff
+            if (buffData.timeLife <= 0) return;   // 永久Buff处理
 
             if(Time.time - buffData.currentTime >= buffData.timeLife)     // 检测时间是否到期
             {
