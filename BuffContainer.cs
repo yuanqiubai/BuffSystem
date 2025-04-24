@@ -4,8 +4,8 @@ using System.Collections.Generic;
 namespace BuffSystem
 {
     /// <summary>
-    /// BuffÁĞ±í
-    /// ·ÅÖÃÔÚ¶ÔÏóÉÏ£¬ÓÃÓÚ¹ÜÀí¶ÔÏó×ÔÉíµÄBuff
+    /// Buffå®¹å™¨
+    /// ç»„åˆåœ¨ActorStatsä¸­ï¼Œç®¡ç†å¯¹è±¡è‡ªèº«çš„Buffç”Ÿå‘½å‘¨æœŸ 
     /// </summary>
     public class BuffContainer
     {
@@ -18,47 +18,47 @@ namespace BuffSystem
             actorStats = Target;
         }
 
-        // Ìí¼ÓBuff
+        // æ·»åŠ Buff
         public void AddBuff(Buff newBuff)
         {
             if(buffDict.TryGetValue(newBuff.buffData.buffID, out Buff existingBuff))
             {
-                // ÒÑ´æÔÚÏàÍ¬BuffµÄ´¦Àí£ºË¢ĞÂÊ±¼ä
+                // å·²å­˜åœ¨ç›¸åŒBuffçš„å¤„ç†ï¼šåˆ·æ–°æ—¶é—´
                 existingBuff.RemakingTime();
 
-                existingBuff.ActivateBuffEffect(actorStats);   // ´¥·¢Buff¼¤»îÊ±¿ÌĞ§¹û
+                existingBuff.ActivateBuffEffect(actorStats);   // è§¦å‘Buffæ¿€æ´»æ—¶åˆ»æ•ˆæœ
             }
             else
             {
                 buffDict.Add(newBuff.buffData.buffID, newBuff);
-                newBuff.ActivateBuffEffect(actorStats);        // ´¥·¢Buff¼¤»îÊ±¿ÌĞ§¹û
+                newBuff.ActivateBuffEffect(actorStats);        // è§¦å‘Buffæ¿€æ´»æ—¶åˆ»æ•ˆæœ
             }
         }
 
         /// <summary>
-        /// ÒÆ³ıBuff
-        /// ËµÃ÷£º¸ù¾İBuff³ÖĞøÊ±¼ä¹Ø±ÕBuff,ÒÆ³ıBuff
+        /// ç§»é™¤Buff
+        /// è¯´æ˜ï¼šæ ¹æ®BuffæŒç»­æ—¶é—´å…³é—­Buff,ç§»é™¤Buff
         /// </summary>
         public void UpdateBuffTimeLife()
         {
-            // ÏÈÊÕ¼¯ĞèÒªÒÆ³ıµÄbuffID
+            // å…ˆæ”¶é›†éœ€è¦ç§»é™¤çš„buffID
             List<string> toRemove = new List<string>();
 
             foreach (Buff buff in buffDict.Values)
             {
                 if (!buff.buffData.isActive)
                 {
-                    buff.DeactivateBuffEffect(actorStats);     // ´¥·¢Buff½áÊøÊ±¿ÌĞ§¹û
-                    Debug.Log("Buff½áÊø£¬ÒÆ³ıBuff");
+                    buff.DeactivateBuffEffect(actorStats);     // è§¦å‘Buffç»“æŸæ—¶åˆ»æ•ˆæœ
+                    Debug.Log("Buffç»“æŸï¼Œç§»é™¤Buff");
                     toRemove.Add(buff.buffData.buffID);
                     continue;
                 }
 
-                buff.HandleSustainedEffect(actorStats);        // ´¥·¢Buff³ÖĞøÆÚ¼äĞ§¹û
+                buff.HandleSustainedEffect(actorStats);        // è§¦å‘BuffæŒç»­æœŸé—´æ•ˆæœ
                 buff.UpdateTime();
             }
 
-            // ±éÀú½áÊøºóÔÙÒÆ³ı
+            // éå†ç»“æŸåå†ç§»é™¤
             foreach (string id in toRemove)
             {
                 buffDict.Remove(id);
@@ -66,8 +66,8 @@ namespace BuffSystem
         }
 
         /// <summary>
-        /// ÒÆ³ıBuff
-        /// ËµÃ÷£º¸ù¾İBuffID£¬ÒÆ³ıBuff
+        /// ç§»é™¤Buff
+        /// è¯´æ˜ï¼šæ ¹æ®BuffIDï¼Œç§»é™¤Buff
         /// </summary>
         /// <param name="buffID"></param>
         public void RemoveBuffByID(string buffID)
@@ -76,8 +76,8 @@ namespace BuffSystem
         }
 
         /// <summary>
-        /// ÒÆ³ıËùÓĞBuff
-        /// ËµÃ÷£ºÇå¿Õ¶ÔÏóBuff±í
+        /// ç§»é™¤æ‰€æœ‰Buff
+        /// è¯´æ˜ï¼šæ¸…ç©ºå¯¹è±¡Buffè¡¨
         /// </summary>
         public void RemoveAllBuff()
         {
@@ -85,8 +85,8 @@ namespace BuffSystem
         }
 
         /// <summary>
-        /// »ñÈ¡Buff¼¤»î×´Ì¬
-        /// ËµÃ÷£º¸ù¾İBuffID£¬»ñÈ¡¶ÔÏóBuff¼¤»î×´Ì¬
+        /// è·å–Buffæ¿€æ´»çŠ¶æ€
+        /// è¯´æ˜ï¼šæ ¹æ®BuffIDï¼Œè·å–å¯¹è±¡Buffæ¿€æ´»çŠ¶æ€
         /// </summary>
         /// <param name="buffID"></param>
         /// <returns></returns>
@@ -95,16 +95,16 @@ namespace BuffSystem
             return buffDict[buffID].buffData.isActive;
         }
 
-        // ¼ì²âbuffÊÇ·ñ´æÔÚ
+        // æ£€æµ‹buffæ˜¯å¦å­˜åœ¨
         public bool CheckBuffExist(string buffID)
         {
             return buffDict.ContainsKey(buffID);
         }
 
         /// <summary>
-        /// »ñÈ¡Buff
-        /// ËµÃ÷£º¸ù¾İBuffID£¬´Ó¶ÔÏóBuff±íÖĞ»ñÈ¡Buff
-        /// Ò»°ãÓÃÓÚ·´À¡BuffĞÅÏ¢
+        /// è·å–Buff
+        /// è¯´æ˜ï¼šæ ¹æ®BuffIDï¼Œä»å¯¹è±¡Buffè¡¨ä¸­è·å–Buff
+        /// ä¸€èˆ¬ç”¨äºåé¦ˆBuffä¿¡æ¯
         /// </summary>
         /// <param name="buffID"></param>
         /// <returns></returns>
@@ -119,7 +119,7 @@ namespace BuffSystem
         {
             if(buffDict.Count == 0)
             {
-                Debug.Log(actorStats.name + "µÄBuff±íÎª¿Õ!");
+                Debug.Log(actorStats.name + "çš„Buffè¡¨ä¸ºç©º!");
                 return;
             }
 
@@ -127,8 +127,8 @@ namespace BuffSystem
             {
                 Debug.Log("BuffID: " + item.Value.buffData.buffID + 
                     " BuffName: " + item.Value.buffData.buffName + 
-                    "³ÖĞøÊ±¼ä: " + item.Value.buffData.timeLife + 
-                    "ÒÑ³ÖĞøÊ±¼ä: " + (Time.time - item.Value.buffData.currentTime));
+                    "æŒç»­æ—¶é—´: " + item.Value.buffData.timeLife + 
+                    "å·²æŒç»­æ—¶é—´: " + (Time.time - item.Value.buffData.currentTime));
             }
         }
         #endregion
