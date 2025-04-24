@@ -1,9 +1,9 @@
 # BuffSystem
-这是适用于Unity的Buff系统，我为它提供了更自由的Buff实现方式
+    这是适用于Unity的Buff系统，我为它提供了更自由的Buff实现方式
 你可以完全自定义自己的buff
 
 # 怎么自定义Buff？
-首先你需要创建一个继承自Buff和IBuffEffect的类。
+    首先你需要创建一个继承自Buff和IBuffEffect的类。
 然后实现IBuffEffect接口中的三个方法
 
 下面是一个简单的攻击提升Buff示例:
