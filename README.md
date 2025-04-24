@@ -58,7 +58,7 @@ public class AttackBuff : Buff, IBuffEffect
     我猜测你可能会想要在激活时调用多个委托
     你也可以在这里定义多个委托
     但是你需要注意: 你需要在构造函数中注册它们,否则它们不会被调用！
-    不过Buff的生命周期只有3个阶段，我觉得你只需要实现这3个需要注册委托就可以了。
+    不过Buff的生命周期只有3个阶段，我觉得你只需要实现这 IBuffEffect 接口的3个委托就可以了。
     */
     BuffEffectDelegate MyBuffEffectOnActivate = 
         (n) => 
