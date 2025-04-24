@@ -1,12 +1,16 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-
 /// <summary>
 /// 对象容器
-/// 职责：
-/// 我们可以通过对象容器来访问游戏对象。例如:玩家对象，敌人对象，NPC对象等
-/// 但是有一个要求，你需要为你的对象添加一个ActorStats组件
+/// 职责
+/// 我们可以通过它管理所有的游戏对象，例如玩家、敌人和NPC等等
+/// 每个对象必须且需要为其添加一个ActorStats组件
+/// 
+/// Actors Container
+/// Responsibilities:
+/// This class is used to manage all game objects, such as players, enemies, and NPCs.
+/// Each object must have an ActorStats component attached to it.
 /// </summary>
 public class ActorsContainer : MonoBehaviour
 {
@@ -16,7 +20,7 @@ public class ActorsContainer : MonoBehaviour
     {
         get
         {
-            if(instance == null)
+            if (instance == null)
             {
                 GameObject go = new GameObject("ActorsContainer");
                 instance = go.AddComponent<ActorsContainer>();
@@ -26,7 +30,8 @@ public class ActorsContainer : MonoBehaviour
     }
 
     /// <summary>
-    /// 对象表
+    /// 对象列表
+    /// Object list
     /// </summary>
     Dictionary<string, GameObject> objectList = new Dictionary<string, GameObject>();
 
@@ -44,23 +49,34 @@ public class ActorsContainer : MonoBehaviour
 
     /// <summary>
     /// 添加对象到列表中
+    /// Add an object to the list
     /// </summary>
-    /// <param name="ObjtectUID"></param>
-    /// <param name="obj"></param>
+    /// <param name="ObjtectUID">对象的唯一ID / The unique ID of the object</param>
+    /// <param name="obj">游戏对象 / The game object</param>
     public void AddActor(string ObjtectUID, GameObject obj)
     {
         objectList.Add(ObjtectUID, obj);
     }
 
-    // 移除对象
+    /// <summary>
+    /// 移除对象
+    /// Remove an object
+    /// </summary>
+    /// <param name="ObjtectUID">对象的唯一ID / The unique ID of the object</param>
     public void RemoveActor(string ObjtectUID)
     {
         objectList.Remove(ObjtectUID);
     }
 
-    // 通过Key获取对象
+    /// <summary>
+    /// 通过Key获取对象
+    /// Get an object by its key
+    /// </summary>
+    /// <param name="ObjtectUID">对象的唯一ID / The unique ID of the object</param>
+    /// <returns>游戏对象 / The game object</returns>
     public GameObject GetActor(string ObjtectUID)
     {
         return objectList[ObjtectUID];
     }
 }
+
