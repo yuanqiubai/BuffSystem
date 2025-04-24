@@ -103,7 +103,7 @@ public class AttackBuff : Buff, IBuffEffect
             {
                 // 玩家攻击敌人
                 AttackBuff attackBuff = new AttackBuff();
-                BuffManager.Instance.PublishBuffBuffer(other.gameObject.GetComponent<ActorStats>(), attackBuff);
+                BuffManager.Instance.PublishBuffBuffer(other.gameObject.GetComponent<ActorStats>(), attackBuff);    // 这样就可以给敌人添加一个攻击加成的buff了。
             }
         }
     }
